@@ -19,7 +19,7 @@ COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 ### Install Jupyter and extensions
-RUN python -m pip install --no-cache-dir jupyterlab jupyter_contrib_nbextensions jupyter_nbextensions_configurator
+# RUN python -m pip install --no-cache-dir jupyterlab jupyter_contrib_nbextensions jupyter_nbextensions_configurator
 
 ########################################################################################
 ### Change to the slim image to save on space - ONLY RECOMMENDED FOR STANDALONE PY APPS, according to Python Docker Repo.
@@ -32,7 +32,11 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN mkdir -p /usr/share/man/man1
 
 ### Install next round of linux dependencies that will need to persist in this stage. These are for MS SQL Server connection.
-RUN apt-get update && apt-get install -y --no-install-recommends libaio1 openjdk-11-jre-headless openjdk-11-jdk-headless ca-certificates-java wget && \
+# RUN apt-get update && apt-get install -y --no-install-recommends libaio1 openjdk-11-jre-headless openjdk-11-jdk-headless ca-certificates-java wget && \
+#     rm -rf /var/lib/apt/lists/*
+
+### Alternative linux dependencies for DL
+RUN apt-get update && apt-get install -y --no-install-recommends wget && \
     rm -rf /var/lib/apt/lists/*
 
 # Fix DL4006
@@ -91,11 +95,11 @@ WORKDIR /home/
 COPY --from=compile-image /opt/venv /opt/venv
 
 ### Change style of pyspark dataframes to pretty print
-COPY style.min.css /opt/venv/lib/python3.7/site-packages/notebook/static/style/style.min.css
+# COPY style.min.css /opt/venv/lib/python3.7/site-packages/notebook/static/style/style.min.css
 
 ### Install Jupyter extensions and enable them
-RUN jupyter contrib nbextension install --user
-RUN jupyter nbextensions_configurator enable --user
+# RUN jupyter contrib nbextension install --user
+# RUN jupyter nbextensions_configurator enable --user
 
 ### Install Julia
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
@@ -104,7 +108,7 @@ RUN cp -r julia-1.7.0 /opt/
 RUN ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
 RUN julia -e 'using Pkg;Pkg.add("IJulia")'
 
-CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+# CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
 
 ### Here for documentation, doesn't actually expose the port.
 EXPOSE 8888
