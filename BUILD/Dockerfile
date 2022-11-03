@@ -35,8 +35,14 @@ RUN mkdir -p /usr/share/man/man1
 # RUN apt-get update && apt-get install -y --no-install-recommends libaio1 openjdk-11-jre-headless openjdk-11-jdk-headless ca-certificates-java wget && \
 #     rm -rf /var/lib/apt/lists/*
 
+### HW1-4
+# ### Alternative linux dependencies for DL
+# RUN apt-get update && apt-get install -y --no-install-recommends wget && \
+#     rm -rf /var/lib/apt/lists/*
+
+### HW 5
 ### Alternative linux dependencies for DL
-RUN apt-get update && apt-get install -y --no-install-recommends wget && \
+RUN apt-get update && apt-get install -y --no-install-recommends wget ffmpeg libsm6 libxext6 build-essential cmake  && \
     rm -rf /var/lib/apt/lists/*
 
 # Fix DL4006
@@ -102,11 +108,11 @@ RUN jupyter contrib nbextension install --user
 RUN jupyter nbextensions_configurator enable --user
 
 ### Install Julia
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
-RUN tar -xvzf julia-1.7.0-linux-x86_64.tar.gz
-RUN cp -r julia-1.7.0 /opt/
-RUN ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
-RUN julia -e 'using Pkg;Pkg.add("IJulia")'
+# RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
+# RUN tar -xvzf julia-1.7.0-linux-x86_64.tar.gz
+# RUN cp -r julia-1.7.0 /opt/
+# RUN ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
+# RUN julia -e 'using Pkg;Pkg.add("IJulia")'
 
 CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
 
