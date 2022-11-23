@@ -38,12 +38,12 @@ RUN mkdir -p /usr/share/man/man1
 ### HW1-4
 # ### Alternative linux dependencies for DL
 # RUN apt-get update && apt-get install -y --no-install-recommends wget && \
-    rm -rf /var/lib/apt/lists/*
+    # rm -rf /var/lib/apt/lists/*
 
 ### HW 5
 ### Alternative linux dependencies for DL
 RUN apt-get update && apt-get install -y --no-install-recommends wget ffmpeg libsm6 libxext6 build-essential cmake && \
-    # rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
