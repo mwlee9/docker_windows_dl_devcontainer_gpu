@@ -104,8 +104,8 @@ COPY --from=compile-image /opt/venv /opt/venv
 COPY style.min.css /opt/venv/lib/python3.7/site-packages/notebook/static/style/style.min.css
 
 ## Install Jupyter extensions and enable them
-RUN jupyter contrib nbextension install --user
-RUN jupyter nbextensions_configurator enable --user
+# RUN jupyter contrib nbextension install --user
+# RUN jupyter nbextensions_configurator enable --user
 
 ### Install Julia
 # RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
